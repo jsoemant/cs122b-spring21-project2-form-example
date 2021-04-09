@@ -84,6 +84,7 @@ public class FormServlet extends HttpServlet {
             dbCon.close();
 
         } catch (Exception ex) {
+            ex.printStackTrace();
 
             // Output Error Massage to html
             out.println(String.format("<html><head><title>MovieDBExample: Error</title></head>\n<body><p>SQL error in doGet: %s</p></body></html>", ex.getMessage()));
