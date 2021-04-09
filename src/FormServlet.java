@@ -1,4 +1,6 @@
-import javax.annotation.Resource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.servlet.ServletConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +22,15 @@ import java.sql.Statement;
 public class FormServlet extends HttpServlet {
 
     // Create a dataSource which registered in web.xml
-    @Resource(name = "jdbc/moviedbexample")
     private DataSource dataSource;
 
+    public void init(ServletConfig config) {
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/moviedbexample");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
 
     // Use http GET
     public void doGet(HttpServletRequest request, HttpServletResponse response)
